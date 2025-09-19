@@ -30,8 +30,7 @@ int main(void) {
         if (i) putchar(' ');
         printf("%d", a[i]);
     }
-    putchar('
-');
+    putchar(' ');
 
     free(a);
     return 0;
@@ -40,12 +39,44 @@ int main(void) {
 /* IMPLEMENTAR AQUÍ */
 void max_heapify(int a[], int n, int i) {
     /* TODO */
+    int mayor = i;
+    int izq = 2 * i + 1; //Rama izquierda
+    int der = 2 * i + 2;//Rama derecha
+    
+    if(izq < n && a[izq] > a[mayor]){
+        mayor = izq;
+    }
+    if(der < n && a[der] > a[mayor]){
+        mayor = der;
+    }
+    
+    if(mayor != i){
+        int temp = a[i];
+        a[i] = a[mayor];
+        a[mayor] = temp;
+        max_heapify(a, n, mayor);
+    }
 }
 
 void build_max_heap(int a[], int n) {
     /* TODO */
+    //Consttruccion del heap
+    for(int i = n /2 - 1; i >= 0; i--){
+        max_heapify(a, n, i);
+    }
 }
 
 void heap_sort(int a[], int n) {
     /* TODO */
+    //Construimos el heap
+    build_max_heap(a, n);
+    
+    for (int i = n-1; i > 0 ; i--) {
+        int temp = a[0];
+        a[0] = a[i];
+        a[i] = temp;
+        
+        max_heapify(a, i, 0);
+    }
+            
 }
